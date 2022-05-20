@@ -61,6 +61,8 @@ namespace heuristicOptimization
             //Return fittest iteration ('FittestSpecimine')
             return 0;
         }
+
+
         #endregion
     }
 }
