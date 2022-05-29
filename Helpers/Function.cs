@@ -23,6 +23,11 @@ namespace heuristicOptimization
 
         #region Constructor
         //Eventually will not be needed; functions will be directly deserialzed from script
+        public Function(List<string> Parameters, Dictionary<string, double> Constants)
+        {
+            this.Parameters = Parameters;
+            this.Constants = Constants;
+        }
         #endregion
 
         #region Methods
@@ -59,6 +64,9 @@ namespace heuristicOptimization
         {
             //stub
         }
+        #endregion
+
+        #region Static Methods
         #endregion
     }
 }
