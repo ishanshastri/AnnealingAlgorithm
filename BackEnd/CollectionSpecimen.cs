@@ -12,10 +12,35 @@ namespace heuristicOptimization
         /// <summary>
         /// The list of segments of the DNA strand
         /// </summary>
-        List<T> Segments;
+        public List<T> DNA_1 { get; private set; }
+        public T[] DNA { get; protected set; }
+        /// <summary>
+        /// Gets the length.
+        /// </summary>
+        /// <value>
+        /// The length.
+        /// </value>
+        public int Length
+        {
+            get { return this.DNA.Length; }
+            private set { }
+        }
+
+        //private Function Mutation_Function;
+        //private Function CrossBreed_Function;
+        private Function Fitness_Function;
         #endregion
 
         #region Constructor
+        public CollectionSpecimen(int length)
+        {
+            DNA = new T[length];
+        }
+
+        public CollectionSpecimen()
+        {
+
+        }
         #endregion
 
         #region Public Methods
@@ -38,9 +63,18 @@ namespace heuristicOptimization
         /// </summary>
         public void Create()
         {
-
+            //this.DNA = new List<T>();
+            this.DNA = new T[this.Length];
+            for(int i = 0; i < this.Length; i++)
+            {
+                this.DNA[i] = (this.GetRandomSegment());//populate sequence with random segments
+            }
         }
 
+        /// <summary>
+        /// Gets the fitness.
+        /// </summary>
+        /// <returns>the fitness</returns>
         public int GetFitness()
         {
             throw new NotImplementedException();
@@ -52,7 +86,7 @@ namespace heuristicOptimization
         /// <param name="rate">The rate.</param>
         public void Mutate(double rate)
         {
-            for(int i = 0; i < this.Segments.Count; i++)
+            for(int i = 0; i < this.DNA.Length; i++)
             {
                 if (PerformMutation(rate))
                 {
@@ -68,21 +102,21 @@ namespace heuristicOptimization
         /// </summary>
         /// <param name="i1">The first element.</param>
         /// <param name="i2">The second element.</param>
-        private void Swap(int i1, int i2)
+        protected void Swap(int i1, int i2)
         {
-            T temp = this.Segments[i1];
-            this.Segments[i1] = this.Segments[i2];
-            this.Segments[i2] = temp;
+            T temp = this.DNA[i1];
+            this.DNA[i1] = this.DNA[i2];
+            this.DNA[i2] = temp;
         }
 
         /// <summary>
         /// Performs the random swap.
         /// </summary>
         /// <param name="index">The index of the element being swapped.</param>
-        private void PerformRandomSwap(int index)
+        protected void PerformRandomSwap(int index)
         {
             Random r = new Random();
-            int rand = r.Next(0, this.Segments.Count);//Note that this allows possibility of member swapping with itself; effectively no swap
+            int rand = r.Next(0, this.DNA.Length);//Note that this allows possibility of member swapping with itself; effectively no swap
 
             this.Swap(index, rand);
         }
@@ -98,11 +132,24 @@ namespace heuristicOptimization
         /// </summary>
         /// <param name="rate">The rate.</param>
         /// <returns></returns>
-        private bool PerformMutation(double rate)
+        protected bool PerformMutation(double rate)
         {
             Random r = new Random();
             double rand = r.NextDouble();
             return (rand <= rate) ? true : false;
+        }
+
+        /// <summary>
+        /// Swaps all values.
+        /// </summary>
+        /// <param name="Spec">The spec.</param>
+        public void SwapAllValues(ISpecimen Spec)
+        {/*
+            this.DNA.Clear();
+            foreach(T segment in ((CollectionSpecimen<T>)Spec).DNA)
+            {
+                this.DNA.Add(segment);
+            }*/
         }
         #endregion
     }
