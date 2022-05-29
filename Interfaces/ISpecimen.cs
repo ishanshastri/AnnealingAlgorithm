@@ -11,6 +11,7 @@ namespace heuristicOptimization
         void Mutate(double MutRate);
         void CrossBreed(ISpecimen Spec);
         void Create();
+        void SwapAllValues(ISpecimen Spec);
 
         int GetFitness();
     }
